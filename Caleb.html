@@ -13,22 +13,7 @@
     justify-content: center;
     align-items: center;
     font-family: "微軟雅黑", "Microsoft YaHei", "黑體", sans-serif;
-  }
-
-  #popupButton {
-    padding: 25px 50px;
-    font-size: 28px;
-    font-weight: bold;
-    color: white;
-    background-color: #222;
-    border: 2px solid white;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  #popupButton:hover {
-    background-color: #444;
+    cursor: pointer; /* 滑鼠顯示手型，手機觸控也適合 */
   }
 
   .popup {
@@ -46,8 +31,6 @@
 </style>
 </head>
 <body>
-
-<button id="popupButton">夏以晝</button>
 
 <script>
 const messages = [
@@ -69,7 +52,6 @@ function createPopup(message) {
 
   popup.style.backgroundColor = bgColors[Math.floor(Math.random() * bgColors.length)];
 
-  // 隨機位置，避免超出螢幕
   const x = Math.random() * (window.innerWidth - 180);
   const y = Math.random() * (window.innerHeight - 60);
   popup.style.left = `${x}px`;
@@ -81,17 +63,13 @@ function createPopup(message) {
 }
 
 function triggerPopups() {
-  // 前四個固定訊息
   specificMessages.forEach((msg, i) => setTimeout(() => createPopup(msg), i * 500));
-
-  // 隨機訊息
   for (let i = 0; i < 296; i++) setTimeout(() => createPopup(), 500 + i * 50);
 }
 
-// 點擊觸控事件
-const popupButton = document.getElementById("popupButton");
-popupButton.addEventListener("click", triggerPopups);
-popupButton.addEventListener("touchstart", triggerPopups);
+// 點擊或觸控整個畫面觸發
+document.body.addEventListener("click", triggerPopups);
+document.body.addEventListener("touchstart", triggerPopups);
 
 // 桌面按 Esc 清除所有彈窗
 document.addEventListener("keydown", e => {
