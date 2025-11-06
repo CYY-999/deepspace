@@ -78,11 +78,6 @@ function createPopup(message) {
   document.body.appendChild(popup);
   allPopups.push(popup);
 
-  // 自動消失
-  setTimeout(() => {
-    popup.remove();
-    allPopups = allPopups.filter(p => p !== popup);
-  }, 3000);
 }
 
 function triggerPopups() {
