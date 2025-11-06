@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>黎深</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "微軟雅黑", "Microsoft YaHei", "黑體", sans-serif;
+    cursor: pointer; /* 滑鼠顯示手型，手機觸控也適合 */
+  }
+
+  .popup {
+    position: fixed;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    z-index: 9999;
+    max-width: 200px;
+    word-wrap: break-word;
+  }
+</style>
+</head>
+<body>
+
+<script>
+const messages = [
+  "茉莉", "是我，黎深", "我在你身邊，不在遠方", "叫我的名字",
+  "我們，來日方長","你總是特例","你是噩夢唯一的解法","在我面前的你不是夢境",
+  "我一直都在這裡","好了，乖","帶上傘，我的雪不會融化","別怕，我在這裡","如果想讓你留在身邊，要給幾根小魚乾"
+];
+
+const specificMessages = ["茉莉", "是我，黎深", "別怕，我在這裡", "叫我的名字"];
+const bgColors = ["pink", "green", "skyblue", "lavender", "lightyellow", "plum",
+                  "orange", "deepskyblue", "thistle"];
+
+let allPopups = [];
+
+function createPopup(message) {
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.textContent = message || messages[Math.floor(Math.random() * messages.length)];
+
+  popup.style.backgroundColor = bgColors[Math.floor(Math.random() * bgColors.length)];
+
+  const x = Math.random() * (window.innerWidth - 180);
+  const y = Math.random() * (window.innerHeight - 60);
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+
+  document.body.appendChild(popup);
+  allPopups.push(popup);
+
+}
+
+function triggerPopups() {
+  specificMessages.forEach((msg, i) => setTimeout(() => createPopup(msg), i * 500));
+  for (let i = 0; i < 296; i++) setTimeout(() => createPopup(), 500 + i * 50);
+}
+
+// 點擊或觸控整個畫面觸發
+document.body.addEventListener("click", triggerPopups);
+document.body.addEventListener("touchstart", triggerPopups);
+
+// 桌面按 Esc 清除所有彈窗
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    allPopups.forEach(p => p.remove());
+    allPopups = [];
+  }
+});
+</script>
+
+</body>
+</html>
